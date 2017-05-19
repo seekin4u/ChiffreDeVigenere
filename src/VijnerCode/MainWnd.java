@@ -9,10 +9,12 @@ import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text; //отказался в пользу Label - это дает вохможность записывать букву по коду символа, с Текстом такой штуки не получилось.
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -52,29 +54,37 @@ w enee dchan ge swen
 e pbzi *******(дальше лень)
 сопостовляем индекс буквы текста с индексом буквы в ключе, шифруем/дешифруем.
 
-Немного сделал дерьмо с генерацией формы автоматом, теперь не понимаю как добавить панель вместо сцены
 (а еще это уже готовый квадрат, для наглядности можно по дорисовать по алфавиту слева и справа
 Как на кратинке по ссылке в оглавлении
 */
 public class MainWnd extends Application {
-    public static final int wight = 600;
-    public static final int heigth = 800;
+    public static final int wight = 650;
+    public static final int heigth = 900;
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Vijner Crypt App");
+        primaryStage.setWidth(wight);
+        primaryStage.setHeight(heigth);
+        //TODO - сделать форму НЕ меняющейся - размер должен оставаться одним. Ибо так православно и лень играться с алайнами и анкерами там, где я не понимаю.
         
         //Label label = new Label("123");
         //primaryStage.add(label); //лэйбл нужно влепить слева сверху, или нед GridPane       
         
+        Pane rootPane = new Pane(); //главное полотно, на котором будут размещаться компоненты
+        //grid планирую скинуть на другое НЕ модальное окно, которое будет являться по клике на кнопку меню.
         GridPane grid = new GridPane();
-        grid.setGridLinesVisible(true);
-        grid.setAlignment(Pos.TOP_LEFT);
+        grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        //Text scenetitle = new Text("Таблица Вижнера");
-        //grid.add(scenetitle, 0, 0, 1, 1); // 0 строка и 0 столбец, промежуток мужду столбцами, промежуток между строками
+        Button doItButton = new Button();
+        doItButton.setText("Crypt\\Decrypt");
+        doItButton.setAlignment(Pos.BOTTOM_CENTER);
+        
+        doItButton.setOnAction(event -> { //TODO - реализация чтения в буфер из textField и дальнейшей обработки всего.
+            System.out.println("BATON crytp pressed");
+        });
         
         Label buffer_label = new Label("*");
         
@@ -101,7 +111,8 @@ public class MainWnd extends Application {
         }
         
         
-        Scene scene = new Scene(grid, wight, heigth);
+        Scene scene = new Scene(rootPane);
+        rootPane.getChildren().addAll(grid, doItButton);
         primaryStage.setScene(scene);
         
         primaryStage.show();
