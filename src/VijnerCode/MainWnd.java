@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text; //отказался в пользу Label - это дает вохможность записывать букву по коду символа, с Текстом такой штуки не получилось.
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -70,17 +71,17 @@ public class MainWnd extends Application {
         //Label label = new Label("123");
         //primaryStage.add(label); //лэйбл нужно влепить слева сверху, или нед GridPane       
         
-        Pane rootPane = new Pane(); //главное полотно, на котором будут размещаться компоненты
+        BorderPane rootPane = new BorderPane(); //главное полотно, на котором будут размещаться компоненты
         //grid планирую скинуть на другое НЕ модальное окно, которое будет являться по клике на кнопку меню.
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
-        grid.setHgap(10);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
-        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(5);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
+        grid.setVgap(5);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
         Button doItButton = new Button();
         doItButton.setText("Crypt\\Decrypt");
-        doItButton.setAlignment(Pos.BOTTOM_CENTER);
+        doItButton.setAlignment(Pos.TOP_CENTER);
         
         doItButton.setOnAction(event -> { //TODO - реализация чтения в буфер из textField и дальнейшей обработки всего.
             System.out.println("BATON crytp pressed");
@@ -110,9 +111,14 @@ public class MainWnd extends Application {
             asci_count++;
         }
         
+        //allign компонентов
+        rootPane.setCenter(grid);
+        rootPane.setTop(doItButton);
+        
+        //rootPane.getChildren().addAll(grid, doItButton); throws InvocationTargetException
         
         Scene scene = new Scene(rootPane);
-        rootPane.getChildren().addAll(grid, doItButton);
+        
         primaryStage.setScene(scene);
         
         primaryStage.show();
