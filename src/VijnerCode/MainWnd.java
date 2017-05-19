@@ -17,10 +17,16 @@ import javafx.scene.control.Label;
 /**
  *
  * @author IMM
+ * VCA - Vijner Crypt App
+ * Многоалфавитный шифр замены - 18** год
+ * Рисшифрован офицером прусской армии
+ * 
  * Подробнее о шифре - https://ru.wikipedia.org/wiki/Шифр_Виженера
- * Многоалфавитный шифр замены, который работает за счет таблтцы Виженера
+ *
  * НЕ сложный проект, но это интереснее чем копировать чужой код
  * Или просто пытаться в нем замести следы того, что ргз не твое :^)
+ * 
+ * Так же, у меня монитор в ~26 дюймов, так что комментарии будут длинными, сорянити.
  */
 
 /*
@@ -36,30 +42,34 @@ import javafx.scene.control.Label;
 обрезаем при надобности
 прим :
 мне не нравится писать на джаве
-пер ем ентребую тнашис ер дцапе
-i love write in java
+пер ем ентребую тнашис ер дцапе - и дальше ключ обрезали.
+i love write in java - аналог не великой мове
 w enee dchan ge swen
 Находим букву М в строке, находим соответствующую ей букву п в столбце и смотрим на символ, который пересекают столбец и строка, и записываем его
 
 получаем :
 
-e pbzi *******
+e pbzi *******(дальше лень)
 сопостовляем индекс буквы текста с индексом буквы в ключе, шифруем/дешифруем.
+
+Немного сделал дерьмо с генерацией формы автоматом, теперь не понимаю как добавить панель вместо сцены
+(а еще это уже готовый квадрат, для наглядности можно по дорисовать по алфавиту слева и справа
+Как на кратинке по ссылке в оглавлении
 */
 public class MainWnd extends Application {
     public static final int wight = 600;
     public static final int heigth = 800;
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("MyApp");
+        primaryStage.setTitle("Vijner Crypt App");
         
-        Label label = new Label("123");
+        //Label label = new Label("123");
         //primaryStage.add(label); //лэйбл нужно влепить слева сверху, или нед GridPane       
         
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
         grid.setAlignment(Pos.TOP_LEFT);
-        grid.setHgap(10);
+        grid.setHgap(10);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
@@ -82,7 +92,7 @@ public class MainWnd extends Application {
                 //генерация кода символа, учитывая его смещение от 65 символа
                 //                
                 buffer_label = new Label(buffer); //25 % 10 = 5
-                grid.add(buffer_label, i, j, 1, 1);
+                grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс
                 vij_table[i][j] = buffer;
                 
                 asci_count++;
@@ -121,6 +131,8 @@ public class MainWnd extends Application {
     }
     
     private static char changeSymbol(String codeString, int i,int j, char code_char){
+        //меняем в шифротексте символ зашифрованный на соответствующий символ из таблицы
+        //
         return (char) 127; //see below about 127
     }
     /**
