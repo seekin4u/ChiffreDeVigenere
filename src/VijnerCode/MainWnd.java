@@ -59,8 +59,8 @@ e pbzi *******(дальше лень)
 Как на кратинке по ссылке в оглавлении
 */
 public class MainWnd extends Application {
-    public static final int wight = 650;
-    public static final int heigth = 900;
+    public static final int wight = 550;
+    public static final int heigth = 700;
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Vijner Crypt App");
@@ -79,39 +79,42 @@ public class MainWnd extends Application {
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
             Stage GridWnd = new Stage();
-            ///\
-            GridWnd.setTitle("123456789");
-            GridWnd.setWidth(wight);
-            GridWnd.setHeight(heigth);
+
+            GridWnd.setTitle("Table");
+            GridWnd.setWidth(550);//магические числа, которые почти идеально подходят для этого окна.
+            GridWnd.setHeight(700);
+            GridWnd.setResizable(false);
             
             VBox root = new VBox();
             
+            Label desc = new Label("Вид таблицы Виженера");
+            desc.setAlignment(Pos.CENTER);
+            desc.setPadding(new Insets(25, 25, 25, 25));
+            
             GridPane grid = new GridPane();
-            //grid.setAlignment(Pos.CENTER);
-            grid.setHgap(5);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплываются лэйблы
+            grid.setAlignment(Pos.CENTER);
+            grid.setHgap(5);
             grid.setVgap(5);
-            grid.setVisible(true);
+            grid.setGridLinesVisible(true);//ЛИНИИ ГРИДА
             grid.setPadding(new Insets(25, 25, 25, 25));            
             
-            Label buffer_label = new Label("*");
-        
             String buffer = "";
         
-            int asci_char = 65;
+            int asci_char = 65;//начало англицкого алфавита в ASCII
             int asci_count = 0;
         
             for(int i = 0; i < 26; i ++){
                 for(int j = 0; j< 26; j++)
-                {
-                    //генерация кода символа, учитывая его смещение от 65 символа           
-                    buffer_label = new Label(Character.toString((char) (asci_char + ( asci_count % 26) ) )); //25 % 10 = 5
+                {         
+                    Label buffer_label = new Label(Character.toString((char) (asci_char + ( asci_count % 26) ) )); //25 % 10 = 5
                     grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс                
                     asci_count++;
                 }
                 asci_count++;
             }
-        
-            root.getChildren().add(grid);
+            
+            root.setAlignment(Pos.CENTER);
+            root.getChildren().addAll(desc, grid);
             
             Scene scene = new Scene(root);
             GridWnd.setScene(scene);
