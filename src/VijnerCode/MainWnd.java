@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 
 /**
  *
@@ -63,21 +64,10 @@ public class MainWnd extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Vijner Crypt App");
-        primaryStage.setWidth(wight);
-        primaryStage.setHeight(heigth);
-        //TODO - сделать форму НЕ меняющейся - размер должен оставаться одним. Ибо так православно и лень играться с алайнами и анкерами там, где я не понимаю.
+        primaryStage.setWidth(wight / 2);
+        primaryStage.setHeight(heigth / 2);
         
-        //Label label = new Label("123");
-        //primaryStage.add(label); //лэйбл нужно влепить слева сверху, или нед GridPane       
-        
-        VBox rootPane = new VBox(); //главное полотно, на котором будут размещаться компоненты
-        //grid планирую скинуть на другое НЕ модальное окно, которое будет являться по клике на кнопку меню.
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(5);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
-        grid.setVgap(5);
-        grid.setVisible(true);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        VBox rootPane = new VBox();
         
         StackPane buttonPane = new StackPane();
         Button doItButton = new Button();
@@ -86,40 +76,57 @@ public class MainWnd extends Application {
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(25, 25, 10, 25));
  
-        doItButton.setOnAction(event -> { //TODO - реализация чтения в буфер из textField и дальнейшей обработки всего.
+        doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
-        });
+            Stage GridWnd = new Stage();
+            ///\
+            GridWnd.setTitle("123456789");
+            GridWnd.setWidth(wight);
+            GridWnd.setHeight(heigth);
+            
+            VBox root = new VBox();
+            
+            GridPane grid = new GridPane();
+            //grid.setAlignment(Pos.CENTER);
+            grid.setHgap(5);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплываются лэйблы
+            grid.setVgap(5);
+            grid.setVisible(true);
+            grid.setPadding(new Insets(25, 25, 25, 25));            
+            
+            Label buffer_label = new Label("*");
         
-        Label buffer_label = new Label("*");
+            String buffer;
         
-        String buffer;
+            int asci_char = 65;
+            int asci_count = 0;
         
-        int asci_char = 65;
-        int asci_count = 0;
+            String[][] vij_table = new String[27][27];
         
-        String[][] vij_table = new String[27][27];
-        
-        for(int i = 0; i < 26; i ++){
-            for(int j = 0; j< 26; j++)
-            {
-                buffer = Character.toString((char) (asci_char + ( asci_count % 26) ) );
-                //генерация кода символа, учитывая его смещение от 65 символа
-                //                
-                buffer_label = new Label(buffer); //25 % 10 = 5
-                grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс
-                vij_table[i][j] = buffer;
+            for(int i = 0; i < 26; i ++){
+                for(int j = 0; j< 26; j++)
+                {
+                    buffer = Character.toString((char) (asci_char + ( asci_count % 26) ) );
+                    //генерация кода символа, учитывая его смещение от 65 символа
+                    //                
+                    buffer_label = new Label(buffer); //25 % 10 = 5
+                    grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс
+                    vij_table[i][j] = buffer;
                 
+                    asci_count++;
+                }
                 asci_count++;
             }
-            asci_count++;
-        }
         
-        //allign компонентов
-        //rootPane.setCenter(grid);
-        //rootPane.setTop(doItButton);
+            //root.getChildren().add(grid);
+            
+            Scene scene = new Scene(root);
+            
+            GridWnd.initOwner(primaryStage);
+            GridWnd.initModality(Modality.APPLICATION_MODAL);
+            GridWnd.showAndWait();
+        });
         
-        //rootPane.getChildren().addAll(grid, doItButton); throws InvocationTargetException
-        rootPane.getChildren().addAll(buttonPane, grid);
+        rootPane.getChildren().add(buttonPane);
         
         Scene scene = new Scene(rootPane);
         
@@ -127,9 +134,7 @@ public class MainWnd extends Application {
         
         primaryStage.show();
     }
-//возможно создание методов для генерации грида и генерации/заполнения массива, но считаю, что они не нужны при однократной генерации.
-//и дальнейшем использовании лишь единожды
-    
+
     private static void code(String[][] vjTable, String message, String code_key){
         //nothing yet;
         //используем таблицу Вижнера, сгенерированную где-то ранее, что бы
