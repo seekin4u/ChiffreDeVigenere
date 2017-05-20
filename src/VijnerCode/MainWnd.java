@@ -100,18 +100,12 @@ public class MainWnd extends Application {
             int asci_char = 65;
             int asci_count = 0;
         
-            String[][] vij_table = new String[27][27];
-        
             for(int i = 0; i < 26; i ++){
                 for(int j = 0; j< 26; j++)
                 {
-                    buffer = Character.toString((char) (asci_char + ( asci_count % 26) ) );
-                    //генерация кода символа, учитывая его смещение от 65 символа
-                    //                
-                    buffer_label = new Label(buffer); //25 % 10 = 5
-                    grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс
-                    vij_table[i][j] = buffer;
-                
+                    //генерация кода символа, учитывая его смещение от 65 символа           
+                    buffer_label = new Label(Character.toString((char) (asci_char + ( asci_count % 26) ) )); //25 % 10 = 5
+                    grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс                
                     asci_count++;
                 }
                 asci_count++;
