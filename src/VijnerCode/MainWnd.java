@@ -95,7 +95,7 @@ public class MainWnd extends Application {
             
             Label buffer_label = new Label("*");
         
-            String buffer;
+            String buffer = "";
         
             int asci_char = 65;
             int asci_count = 0;
@@ -111,9 +111,10 @@ public class MainWnd extends Application {
                 asci_count++;
             }
         
-            //root.getChildren().add(grid);
+            root.getChildren().add(grid);
             
             Scene scene = new Scene(root);
+            GridWnd.setScene(scene);
             
             GridWnd.initOwner(primaryStage);
             GridWnd.initModality(Modality.APPLICATION_MODAL);
