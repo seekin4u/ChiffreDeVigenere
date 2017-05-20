@@ -11,11 +11,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text; //отказался в пользу Label - это дает вохможность записывать букву по коду символа, с Текстом такой штуки не получилось.
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -71,18 +70,22 @@ public class MainWnd extends Application {
         //Label label = new Label("123");
         //primaryStage.add(label); //лэйбл нужно влепить слева сверху, или нед GridPane       
         
-        BorderPane rootPane = new BorderPane(); //главное полотно, на котором будут размещаться компоненты
+        VBox rootPane = new VBox(); //главное полотно, на котором будут размещаться компоненты
         //grid планирую скинуть на другое НЕ модальное окно, которое будет являться по клике на кнопку меню.
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);//количество Horizontal и VErtical пикселей между ячейками таблицы - больше - не расплывается таблицы
         grid.setVgap(5);
+        grid.setVisible(true);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
+        StackPane buttonPane = new StackPane();
         Button doItButton = new Button();
         doItButton.setText("Crypt\\Decrypt");
-        doItButton.setAlignment(Pos.TOP_CENTER);
-        
+        buttonPane.getChildren().add(doItButton);
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setPadding(new Insets(25, 25, 10, 25));
+ 
         doItButton.setOnAction(event -> { //TODO - реализация чтения в буфер из textField и дальнейшей обработки всего.
             System.out.println("BATON crytp pressed");
         });
@@ -112,10 +115,11 @@ public class MainWnd extends Application {
         }
         
         //allign компонентов
-        rootPane.setCenter(grid);
-        rootPane.setTop(doItButton);
+        //rootPane.setCenter(grid);
+        //rootPane.setTop(doItButton);
         
         //rootPane.getChildren().addAll(grid, doItButton); throws InvocationTargetException
+        rootPane.getChildren().addAll(buttonPane, grid);
         
         Scene scene = new Scene(rootPane);
         
