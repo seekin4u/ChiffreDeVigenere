@@ -13,7 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -73,12 +75,16 @@ public class MainWnd extends Application {
         
         StackPane buttonPane = new StackPane();//центрирует компоненты внутри себя
         
+        HBox verticalPane = new HBox(); //ставит компоненты вертикально
+        
         Button doItButton = new Button();
-        doItButton.setText("Crypt\\Decrypt");
+        doItButton.setText("Table example");
         doItButton.setAlignment(Pos.CENTER);
-        //buttonPane.setAlignment(Pos.CENTER);
-        buttonPane.setPadding(new Insets(25, 25, 10, 25));
-        buttonPane.getChildren().add(doItButton);
+        verticalPane.getChildren().add(doItButton);
+        verticalPane.setPadding(new Insets(5, 25, 5, 25));//отступы между элементами
+        buttonPane.getChildren().add(verticalPane);
+        
+        rootPane.setCenter(buttonPane);
  
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
@@ -127,8 +133,14 @@ public class MainWnd extends Application {
             GridWnd.initModality(Modality.APPLICATION_MODAL);
             GridWnd.showAndWait();
         });
-                
-        rootPane.setTop(buttonPane);
+             
+        StackPane textCryptPane = new StackPane();
+        textCryptPane.getChildren().add(new TextArea("CrytpText"));
+        rootPane.setTop(textCryptPane);
+        
+        StackPane textEncryptPane = new StackPane();
+        textEncryptPane.getChildren().add(new TextArea("EncryptedText"));
+        rootPane.setBottom(textEncryptPane);
         
         Scene scene = new Scene(rootPane);
         
