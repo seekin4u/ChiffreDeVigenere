@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -67,14 +69,16 @@ public class MainWnd extends Application {
         primaryStage.setWidth(wight / 2);
         primaryStage.setHeight(heigth / 2);
         
-        VBox rootPane = new VBox();
+        BorderPane rootPane = new BorderPane();
         
-        StackPane buttonPane = new StackPane();
+        StackPane buttonPane = new StackPane();//центрирует компоненты внутри себя
+        
         Button doItButton = new Button();
         doItButton.setText("Crypt\\Decrypt");
-        buttonPane.getChildren().add(doItButton);
-        buttonPane.setAlignment(Pos.CENTER);
+        doItButton.setAlignment(Pos.CENTER);
+        //buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(25, 25, 10, 25));
+        buttonPane.getChildren().add(doItButton);
  
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
@@ -123,8 +127,8 @@ public class MainWnd extends Application {
             GridWnd.initModality(Modality.APPLICATION_MODAL);
             GridWnd.showAndWait();
         });
-        
-        rootPane.getChildren().add(buttonPane);
+                
+        rootPane.setTop(buttonPane);
         
         Scene scene = new Scene(rootPane);
         
@@ -151,12 +155,11 @@ public class MainWnd extends Application {
         //нужен поиск 2 индексов - два раза для i и j
         
         //запуск функции для подмены символа в шифротексте на символ[i,j] из таблицы вижнера
-        return (char) 127; //127 - аски символ крышечки. Такой символ не будет поддерживаться (в теории даже удаляться из строки)
+        return (char) 127; //127 - аски символ крышечки.
     }
     
     private static char changeSymbol(String codeString, int i,int j, char code_char){
-        //меняем в шифротексте символ зашифрованный на соответствующий символ из таблицы
-        //
+
         return (char) 127; //see below about 127
     }
     /**
