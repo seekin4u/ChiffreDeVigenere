@@ -73,7 +73,7 @@ public class MainWnd extends Application {
         
         BorderPane rootPane = new BorderPane();
         
-        StackPane buttonPane = new StackPane();//центрирует компоненты внутри себя
+        StackPane buttonPane = new StackPane();
         
         HBox verticalPane = new HBox(); //ставит компоненты вертикально
         
@@ -81,11 +81,18 @@ public class MainWnd extends Application {
         doItButton.setText("Table example");
         doItButton.setAlignment(Pos.CENTER);
         verticalPane.getChildren().add(doItButton);
-        verticalPane.setPadding(new Insets(5, 25, 5, 25));//отступы между элементами
-        buttonPane.getChildren().add(verticalPane);
+        verticalPane.setPadding(new Insets(25, 25, 25, 25));//отступы между элементами
+        //buttonPane.getChildren().add(verticalPane);
         
-        rootPane.setCenter(buttonPane);
- 
+        Button generateCode = new Button();
+        generateCode.setText("Generate");
+        generateCode.setAlignment(Pos.CENTER);
+        verticalPane.getChildren().add(generateCode);
+        
+        verticalPane.setAlignment(Pos.CENTER);
+        verticalPane.setSpacing(25);
+        rootPane.setCenter(verticalPane);
+        
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
             Stage GridWnd = new Stage();
