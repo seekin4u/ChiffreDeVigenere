@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -30,38 +29,8 @@ import javafx.stage.Modality;
  * 
  * Подробнее о шифре - https://ru.wikipedia.org/wiki/Шифр_Виженера
  *
- * НЕ сложный проект, но это интереснее чем копировать чужой код
- * Или просто пытаться в нем замести следы того, что ргз не твое :^)
- * 
- * Так же, у меня монитор в ~26 дюймов, так что комментарии будут длинными, сорянити.
- */
-
-/*
-*Шифторекст - зашифрованный с помощью ключа текст
-Ключ шифрования/ключ (code_key - в этом примере) - ключ, с пом. которого из шифротекста
-получаем расшифрованное сообщение - текст/сообщение
-
-пример шифрования -
-сообщение - мне не нравится писать на джаве
-ключ - требуют наши сердца
-
-копируем ключ столько раз, сколько необходимо, что бы длина ключа была равной длине сообщения
-обрезаем при надобности
-прим :
-мне не нравится писать на джаве
-пер ем ентребую тнашис ер дцапе - и дальше ключ обрезали.
-i love write in java - аналог не великой мове
-w enee dchan ge swen
-Находим букву М в строке, находим соответствующую ей букву п в столбце и смотрим на символ, который пересекают столбец и строка, и записываем его
-
-получаем :
-
-e pbzi *******(дальше лень)
-сопостовляем индекс буквы текста с индексом буквы в ключе, шифруем/дешифруем.
-
-(а еще это уже готовый квадрат, для наглядности можно по дорисовать по алфавиту слева и справа
-Как на кратинке по ссылке в оглавлении
 */
+
 public class MainWnd extends Application {
     public static final int wight = 550;
     public static final int heigth = 700;
@@ -73,7 +42,7 @@ public class MainWnd extends Application {
         
         BorderPane rootPane = new BorderPane();
         
-        HBox verticalPane = new HBox(); //ставит компоненты вертикально
+        HBox verticalPane = new HBox();
         
         Button doItButton = new Button();
         doItButton.setText("Table example");
@@ -90,17 +59,12 @@ public class MainWnd extends Application {
         verticalPane.setSpacing(25);
         rootPane.setCenter(verticalPane);
         
-        generateCode.setOnAction(event -> {
-            System.out.println("GENERATE button pressed");
-            
-        });
-        
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
             Stage GridWnd = new Stage();
 
             GridWnd.setTitle("Table");
-            GridWnd.setWidth(550);//магические числа, которые почти идеально подходят для этого окна.
+            GridWnd.setWidth(550);
             GridWnd.setHeight(700);
             GridWnd.setResizable(false);
             
@@ -126,7 +90,7 @@ public class MainWnd extends Application {
                 for(int j = 0; j< 26; j++)
                 {         
                     Label buffer_label = new Label(Character.toString((char) (asci_char + ( asci_count % 26) ) )); //25 % 10 = 5
-                    grid.add(buffer_label, i, j, 1, 1); //индекс строки, индекс столбца, количество ячеек(пикселей?) между занятыми , котоыре имеют индекс                
+                    grid.add(buffer_label, i, j, 1, 1);               
                     asci_count++;
                 }
                 asci_count++;
@@ -146,13 +110,13 @@ public class MainWnd extends Application {
         VBox textAndKeyPane = new VBox();
         
         //Crypt text area
-        TextArea cryptTextArea = new TextArea("");
+        TextArea cryptTextArea = new TextArea("This is a test text");
         cryptTextArea.setPrefHeight(wight / 4);
         
         textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
         
         //Key text area
-        TextArea keyTextArea = new TextArea("");
+        TextArea keyTextArea = new TextArea("This is a test key");
         keyTextArea.setPrefHeight(wight / 10);
         
         textAndKeyPane.getChildren().add(keyTextArea);
@@ -168,23 +132,69 @@ public class MainWnd extends Application {
         primaryStage.setScene(scene);
         
         primaryStage.show();
-    }
-
-    private static void code(String[][] vjTable, String message, String code_key){
-        //nothing yet;
-        //используем таблицу Вижнера, сгенерированную где-то ранее, что бы
-        //кодировать сообщение message c помощью ключа code_key
+        
+        generateCode.setOnAction(event -> {
+            System.out.println("GENERATE button pressed");
+            fillKey(keyTextArea, cryptTextArea);
+        });
     }
     
-    private static void decode(String[][] vjTable, String message, String code_key){
-        //nothing yet
-        //используем таблицу, что бы декодировать сообщение message
-        //с помощью ключа code_key 
+    //cut or fill key to needed size
+    private static String fillKey(TextArea keyTextArea, TextArea cryptTextArea){ 
+        String Skey = removePunct(keyTextArea.getText());
+        String Scrypt = removePunct(cryptTextArea.getText());
+        
+        System.out.println(Skey);
+        System.out.println(Scrypt);
+        
+        
+        char[] key = Skey.toCharArray();
+        char[] crypt = Scrypt.toCharArray();
+        
+        int crypt_size = Scrypt.length();
+        int key_size = Skey.length();
+        
+        //lower-case both
+        for(int i = 0; i < crypt_size; i++){
+            crypt[i] = Character.toLowerCase(crypt[i]);
+        }
+        
+        for(int i = 0; i < key_size; i++){
+            key[i] = Character.toLowerCase(key[i]);
+        }
+        
+        System.out.println(crypt_size);
+        System.out.println(key_size);
+        
+        
+        String answer = "";
+        return answer;
     }
+    
+    //returns already coded string
+    private static String code(String message, String code_key){
+        int ascii_code = 65;
+        
+        String answer = "";
+        
+        return answer;
+    }
+    
+    //restricted symbols
+    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ";
 
-    /**
-     * @param args the command line arguments
-     */
+    public static String removePunct(String str) {
+        StringBuilder result = new StringBuilder(str.length());
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (PUNCT.indexOf(c) < 0) {
+               result.append(c);
+            }
+        }
+        
+    return result.toString();
+}
+
     public static void main(String[] args) {
         launch(args);
     }
