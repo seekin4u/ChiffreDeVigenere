@@ -117,7 +117,7 @@ public class MainWnd extends Application {
         textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
         
         //Key text area
-        TextArea keyTextArea = new TextArea("12345");
+        TextArea keyTextArea = new TextArea("solaris");
         keyTextArea.setPrefHeight(wight / 10);
         
         textAndKeyPane.getChildren().add(keyTextArea);
@@ -180,16 +180,14 @@ public class MainWnd extends Application {
     }
     
     //returns already coded string
-    private static String code(String message, String key){
-        int ascii_code = 65;
-
-        
+    private static String code(String message, String key){        
         char[] Cmessage = message.toCharArray();
         char[] Ckey = key.toCharArray();
         char[] Canswer = new char[Cmessage.length]; //our encoded char[]
         
         for(int i = 0; i < Canswer.length; i++){
-            Canswer[i] = (char) ((char)Cmessage[i] + (char)Ckey[i]);
+            Canswer[i] = (char) (97 + ((int)Cmessage[i] + (int)Ckey[i]) % 26);
+            System.out.print((((int) Cmessage[i] + (int)Ckey[i]) % 26) + 97 + " ");
         }
         
         String answer = String.valueOf(Canswer);
