@@ -73,16 +73,13 @@ public class MainWnd extends Application {
         
         BorderPane rootPane = new BorderPane();
         
-        StackPane buttonPane = new StackPane();
-        
         HBox verticalPane = new HBox(); //ставит компоненты вертикально
         
         Button doItButton = new Button();
         doItButton.setText("Table example");
         doItButton.setAlignment(Pos.CENTER);
         verticalPane.getChildren().add(doItButton);
-        verticalPane.setPadding(new Insets(25, 25, 25, 25));//отступы между элементами
-        //buttonPane.getChildren().add(verticalPane);
+        verticalPane.setPadding(new Insets(25, 25, 25, 25));
         
         Button generateCode = new Button();
         generateCode.setText("Generate");
@@ -141,12 +138,23 @@ public class MainWnd extends Application {
             GridWnd.showAndWait();
         });
              
-        StackPane textCryptPane = new StackPane();
-        textCryptPane.getChildren().add(new TextArea("CrytpText"));
-        rootPane.setTop(textCryptPane);
+        VBox textAndKeyPane = new VBox();
+        
+        //Crypt text area
+        TextArea cryptTextArea = new TextArea("Crypt text");
+        cryptTextArea.setPrefHeight(wight / 4);
+        textAndKeyPane.getChildren().add(cryptTextArea);
+        
+        //Key text area
+        TextArea keyTextArea = new TextArea("Key Text");
+        keyTextArea.setPrefHeight(wight / 10);
+        
+        textAndKeyPane.getChildren().add(keyTextArea);
+        
+        rootPane.setTop(textAndKeyPane);
         
         StackPane textEncryptPane = new StackPane();
-        textEncryptPane.getChildren().add(new TextArea("EncryptedText"));
+        textEncryptPane.getChildren().add(new TextArea("Encrypted Text"));
         rootPane.setBottom(textEncryptPane);
         
         Scene scene = new Scene(rootPane);
