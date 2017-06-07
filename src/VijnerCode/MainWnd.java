@@ -125,7 +125,9 @@ public class MainWnd extends Application {
         rootPane.setTop(textAndKeyPane);
         
         StackPane textEncryptPane = new StackPane();
-        textEncryptPane.getChildren().add(new TextArea(""));
+        
+        TextArea encryptTextArea = new TextArea();
+        textEncryptPane.getChildren().add(encryptTextArea);
         rootPane.setBottom(textEncryptPane);
         
         Scene scene = new Scene(rootPane);
@@ -143,6 +145,8 @@ public class MainWnd extends Application {
             crypt = crypt.toLowerCase();
             
             key = fillKey(key, crypt); //make key right form
+            
+            encryptTextArea.setText(code(crypt, key));
             
         });
     }
@@ -176,10 +180,19 @@ public class MainWnd extends Application {
     }
     
     //returns already coded string
-    private static String code(String message, String code_key){
+    private static String code(String message, String key){
         int ascii_code = 65;
+
         
-        String answer = "";
+        char[] Cmessage = message.toCharArray();
+        char[] Ckey = key.toCharArray();
+        char[] Canswer = new char[Cmessage.length]; //our encoded char[]
+        
+        for(int i = 0; i < Canswer.length; i++){
+            Canswer[i] = (char) ((char)Cmessage[i] + (char)Ckey[i]);
+        }
+        
+        String answer = String.valueOf(Canswer);
         
         return answer;
     }
