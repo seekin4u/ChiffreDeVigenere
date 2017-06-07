@@ -117,7 +117,7 @@ public class MainWnd extends Application {
         textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
         
         //Key text area
-        TextArea keyTextArea = new TextArea("This is a test key");
+        TextArea keyTextArea = new TextArea("12345");
         keyTextArea.setPrefHeight(wight / 10);
         
         textAndKeyPane.getChildren().add(keyTextArea);
@@ -138,6 +138,10 @@ public class MainWnd extends Application {
             System.out.println("GENERATE button pressed");
             String key = keyTextArea.getText();
             String crypt = cryptTextArea.getText();
+            
+            key = key.toLowerCase();
+            crypt = crypt.toLowerCase();
+            
             key = fillKey(key, crypt); //make key right form
             
         });
@@ -158,14 +162,9 @@ public class MainWnd extends Application {
         int crypt_size = Scrypt.length();
         int key_size = Skey.length();
         
-        //olwer-case both
-        crypt = removeUpperCase(crypt);
-        
-        key = removeUpperCase(key);
-        
         //making key needed length
         if(key_size < crypt_size){
-            for(int i = 1; i < crypt_size - key_size; i++){
+            for(int i = 0; i < crypt_size - key_size; i++){
                 key[i + key_size] = key[i];
             }
         }
@@ -185,16 +184,8 @@ public class MainWnd extends Application {
         return answer;
     }
     
-    private static char[] removeUpperCase(char[] str){
-        
-        for(int i = 0; i < str.length; i++){
-            str[i] = Character.toLowerCase(str[i]);
-        }        
-    return str;
-    }
-    
     //restricted symbols
-    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ";
+    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ 123456789";
 
     public static String removePunct(String str) {
         StringBuilder result = new StringBuilder(str.length());
@@ -202,6 +193,8 @@ public class MainWnd extends Application {
             char c = str.charAt(i);
             if (PUNCT.indexOf(c) < 0) { //getting index of first including of char in that string
                result.append(c);
+            }else{
+                result.append('*'); //if there are all symbols are restricted in string
             }
         }
         
