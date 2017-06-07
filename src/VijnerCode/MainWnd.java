@@ -37,7 +37,7 @@ public class MainWnd extends Application {
     public static final int heigth = 750;
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Vijner Crypt App");
+        primaryStage.setTitle("VCA");
         primaryStage.setWidth(wight / 2);
         primaryStage.setHeight(heigth / 2);
         
@@ -111,7 +111,7 @@ public class MainWnd extends Application {
         VBox textAndKeyPane = new VBox();
         
         //Crypt text area
-        TextArea cryptTextArea = new TextArea("This is a test text text text");
+        TextArea cryptTextArea = new TextArea("thisisatesttexttexttext");
         cryptTextArea.setPrefHeight(wight / 4);
         
         textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
@@ -174,6 +174,8 @@ public class MainWnd extends Application {
         }
         
         String answer = String.valueOf(key); //cast to string to see it normally
+        
+        System.out.println("cryptText:" + Scrypt);
         System.out.println("fillKey:" + answer);
         
         return answer;
@@ -195,7 +197,7 @@ public class MainWnd extends Application {
         
         for(int i = 0; i < Canswer.length; i++){
             Canswer[i] = (char) (97 + ((int)Cmessage[i] + (int)Ckey[i]) % 26); //cast some number to char to display it
-            System.out.print((((int) Cmessage[i] + (int)Ckey[i]) % 26) + 97 + " ");//debug
+            System.out.print((((int) Cmessage[i] + (int)Ckey[i]) % 26)  + 97 +" ");//debug
         }
         
         String answer = String.valueOf(Canswer);
@@ -204,7 +206,7 @@ public class MainWnd extends Application {
     }
     
     //restricted symbols
-    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ 123456789";
+    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~123456789";
 
     public static String removePunct(String str) {
         StringBuilder result = new StringBuilder(str.length());
