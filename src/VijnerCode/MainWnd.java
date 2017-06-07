@@ -90,6 +90,11 @@ public class MainWnd extends Application {
         verticalPane.setSpacing(25);
         rootPane.setCenter(verticalPane);
         
+        generateCode.setOnAction(event -> {
+            System.out.println("GENERATE button pressed");
+            
+        });
+        
         doItButton.setOnAction(event -> {
             System.out.println("BATON crytp pressed");
             Stage GridWnd = new Stage();
@@ -141,12 +146,13 @@ public class MainWnd extends Application {
         VBox textAndKeyPane = new VBox();
         
         //Crypt text area
-        TextArea cryptTextArea = new TextArea("Crypt text");
+        TextArea cryptTextArea = new TextArea("");
         cryptTextArea.setPrefHeight(wight / 4);
-        textAndKeyPane.getChildren().add(cryptTextArea);
+        
+        textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
         
         //Key text area
-        TextArea keyTextArea = new TextArea("Key Text");
+        TextArea keyTextArea = new TextArea("");
         keyTextArea.setPrefHeight(wight / 10);
         
         textAndKeyPane.getChildren().add(keyTextArea);
@@ -154,7 +160,7 @@ public class MainWnd extends Application {
         rootPane.setTop(textAndKeyPane);
         
         StackPane textEncryptPane = new StackPane();
-        textEncryptPane.getChildren().add(new TextArea("Encrypted Text"));
+        textEncryptPane.getChildren().add(new TextArea(""));
         rootPane.setBottom(textEncryptPane);
         
         Scene scene = new Scene(rootPane);
@@ -175,20 +181,7 @@ public class MainWnd extends Application {
         //используем таблицу, что бы декодировать сообщение message
         //с помощью ключа code_key 
     }
-    
-    private static char findSymbol(String codeString, String code_key){
-        //находим символ, соответствующий букве из шифрокода
-        //примерно - поиск индекса символа в одномерном массиве и 26 букв пендосского алфавита
-        //нужен поиск 2 индексов - два раза для i и j
-        
-        //запуск функции для подмены символа в шифротексте на символ[i,j] из таблицы вижнера
-        return (char) 127; //127 - аски символ крышечки.
-    }
-    
-    private static char changeSymbol(String codeString, int i,int j, char code_char){
 
-        return (char) 127; //see below about 127
-    }
     /**
      * @param args the command line arguments
      */
