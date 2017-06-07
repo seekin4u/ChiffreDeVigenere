@@ -159,13 +159,9 @@ public class MainWnd extends Application {
         int key_size = Skey.length();
         
         //olwer-case both
-        for(int i = 0; i < crypt_size; i++){
-            crypt[i] = Character.toLowerCase(crypt[i]);
-        }
+        crypt = removeUpperCase(crypt);
         
-        for(int i = 0; i < key_size; i++){
-            key[i] = Character.toLowerCase(key[i]);
-        }
+        key = removeUpperCase(key);
         
         //making key needed length
         if(key_size < crypt_size){
@@ -187,6 +183,14 @@ public class MainWnd extends Application {
         String answer = "";
         
         return answer;
+    }
+    
+    private static char[] removeUpperCase(char[] str){
+        
+        for(int i = 0; i < str.length; i++){
+            str[i] = Character.toLowerCase(str[i]);
+        }        
+    return str;
     }
     
     //restricted symbols
