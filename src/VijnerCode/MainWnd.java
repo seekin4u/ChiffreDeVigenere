@@ -34,7 +34,7 @@ import javafx.stage.Modality;
 
 public class MainWnd extends Application {
     public static final int wight = 550;
-    public static final int heigth = 700;
+    public static final int heigth = 750;
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Vijner Crypt App");
@@ -136,15 +136,18 @@ public class MainWnd extends Application {
         
         generateCode.setOnAction(event -> {
             System.out.println("GENERATE button pressed");
-            fillKey(keyTextArea, cryptTextArea);
+            String key = keyTextArea.getText();
+            String crypt = cryptTextArea.getText();
+            key = fillKey(key, crypt); //make key right form
+            
         });
     }
     
     //cut or fill key to needed size
-    private static String fillKey(TextArea keyTextArea, TextArea cryptTextArea){ 
+    private static String fillKey(String keyText, String cryptText){ 
         
-        String Skey = removePunct(keyTextArea.getText());
-        String Scrypt = removePunct(cryptTextArea.getText());
+        String Skey = removePunct(keyText);
+        String Scrypt = removePunct(cryptText);
         
         //bufkey less or the same length as crypt length
         //so we need key array was the same length as crypt
@@ -171,10 +174,8 @@ public class MainWnd extends Application {
             }
         }
         
-        String answer = key.toString(); //cast to string to make input
-        
-        //some debug info
-        System.out.println("\nKey after fillKey():" + key);
+        String answer = String.valueOf(key); //cast to string to see it normally
+        System.out.println("fillKey:" + answer);
         
         return answer;
     }
@@ -195,7 +196,7 @@ public class MainWnd extends Application {
         StringBuilder result = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if (PUNCT.indexOf(c) < 0) { //getting indes of first includint of char in that string
+            if (PUNCT.indexOf(c) < 0) { //getting index of first including of char in that string
                result.append(c);
             }
         }
