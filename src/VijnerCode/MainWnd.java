@@ -185,9 +185,17 @@ public class MainWnd extends Application {
         char[] Ckey = key.toCharArray();
         char[] Canswer = new char[Cmessage.length]; //our encoded char[]
         
+        //код iscii символа в десятичной системе складываем по модулю 26
+        //т.е. по количеству буков алфавита, и получаем код финального символа
+        //обратное преобразование должно работать
+        
+        //get ascii symbol's code in decimal and summ it in mod26
+        //will get another code of final char which we will cast to char
+        //two-ways converting should work.
+        
         for(int i = 0; i < Canswer.length; i++){
-            Canswer[i] = (char) (97 + ((int)Cmessage[i] + (int)Ckey[i]) % 26);
-            System.out.print((((int) Cmessage[i] + (int)Ckey[i]) % 26) + 97 + " ");
+            Canswer[i] = (char) (97 + ((int)Cmessage[i] + (int)Ckey[i]) % 26); //cast some number to char to display it
+            System.out.print((((int) Cmessage[i] + (int)Ckey[i]) % 26) + 97 + " ");//debug
         }
         
         String answer = String.valueOf(Canswer);
