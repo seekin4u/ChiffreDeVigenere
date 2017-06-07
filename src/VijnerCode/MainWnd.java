@@ -5,6 +5,7 @@
  */
 package VijnerCode;
 
+import java.util.Arrays;
 import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -110,7 +111,7 @@ public class MainWnd extends Application {
         VBox textAndKeyPane = new VBox();
         
         //Crypt text area
-        TextArea cryptTextArea = new TextArea("This is a test text");
+        TextArea cryptTextArea = new TextArea("This is a test text text text");
         cryptTextArea.setPrefHeight(wight / 4);
         
         textAndKeyPane.getChildren().add(cryptTextArea);//addAll();
@@ -141,20 +142,20 @@ public class MainWnd extends Application {
     
     //cut or fill key to needed size
     private static String fillKey(TextArea keyTextArea, TextArea cryptTextArea){ 
+        
         String Skey = removePunct(keyTextArea.getText());
         String Scrypt = removePunct(cryptTextArea.getText());
         
-        System.out.println(Skey);
-        System.out.println(Scrypt);
-        
-        
-        char[] key = Skey.toCharArray();
+        //bufkey less or the same length as crypt length
+        //so we need key array was the same length as crypt
+        char[] bufkey = Skey.toCharArray();//making 2 new objects
         char[] crypt = Scrypt.toCharArray();
+        char[] key = Arrays.copyOf(bufkey, Scrypt.length()); //copy array without creating new obj
         
         int crypt_size = Scrypt.length();
         int key_size = Skey.length();
         
-        //lower-case both
+        //olwer-case both
         for(int i = 0; i < crypt_size; i++){
             crypt[i] = Character.toLowerCase(crypt[i]);
         }
@@ -163,11 +164,18 @@ public class MainWnd extends Application {
             key[i] = Character.toLowerCase(key[i]);
         }
         
-        System.out.println(crypt_size);
-        System.out.println(key_size);
+        //making key needed length
+        if(key_size < crypt_size){
+            for(int i = 1; i < crypt_size - key_size; i++){
+                key[i + key_size] = key[i];
+            }
+        }
         
+        String answer = key.toString(); //cast to string to make input
         
-        String answer = "";
+        //some debug info
+        System.out.println("\nKey after fillKey():" + key);
+        
         return answer;
     }
     
@@ -187,7 +195,7 @@ public class MainWnd extends Application {
         StringBuilder result = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if (PUNCT.indexOf(c) < 0) {
+            if (PUNCT.indexOf(c) < 0) { //getting indes of first includint of char in that string
                result.append(c);
             }
         }
